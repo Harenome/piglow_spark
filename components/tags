@@ -1,0 +1,126 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+all	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def all(self, brightness):$/;"	m	language:Python	class:Board
+Arm	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^class Arm(LedSet):$/;"	c	language:Python
+arm	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def arm(self, id, brightness):$/;"	m	language:Python	class:Board
+Arm	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^from arm import Arm$/;"	i	language:Python
+Arm	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^from arm import Arm$/;"	i	language:Python
+ArmIdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^class ArmIdError(IdError):$/;"	c	language:Python
+available	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def available():$/;"	m	language:Python	class:Arm
+available	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def available():$/;"	m	language:Python	class:Led
+available	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def available():$/;"	m	language:Python	class:Ring
+backup	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^backup = pg.dump()$/;"	v	language:Python
+BLIND	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^BLIND = 255$/;"	v	language:Python
+Board	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^class Board:$/;"	c	language:Python
+brightness	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def brightness(self):$/;"	m	language:Python	class:Led
+BRIGHTNESS	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^BRIGHTNESS = 100$/;"	v	language:Python
+buffer	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def buffer(self, leds, brightness):$/;"	m	language:Python	class:Board
+buffer	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def buffer(self, led_address, brightness):$/;"	m	language:Python	class:Bus
+buffer	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def buffer(self, brightness):$/;"	m	language:Python	class:Led
+buffer	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def buffer(self, brightness):$/;"	m	language:Python	class:LedSet
+Bus	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^from bus import Bus$/;"	i	language:Python
+Bus	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^class Bus:$/;"	c	language:Python
+Bus	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^from bus import Bus$/;"	i	language:Python
+color	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def color(self, id, brightness):$/;"	m	language:Python	class:Board
+correct_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def correct_id(id):$/;"	m	language:Python	class:Arm
+correct_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def correct_id(id):$/;"	m	language:Python	class:Led
+correct_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def correct_id(id):$/;"	m	language:Python	class:Ring
+dump	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def dump(self):$/;"	m	language:Python	class:Board
+dump	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def dump(self):$/;"	m	language:Python	class:Bus
+empty_buffer	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def empty_buffer(self):$/;"	m	language:Python	class:Bus
+EN_ARM1_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^EN_ARM1_ADDR = 0x13$/;"	v	language:Python
+EN_ARM2_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^EN_ARM2_ADDR = 0x14$/;"	v	language:Python
+EN_ARM3_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^EN_ARM3_ADDR = 0x15$/;"	v	language:Python
+EN_OUTPUT_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^EN_OUTPUT_ADDR = 0x00$/;"	v	language:Python
+FIRST	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    FIRST = 1$/;"	v	language:Python	class:Arm
+FIRST	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    FIRST = 1$/;"	v	language:Python	class:Led
+FIRST	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    FIRST = 1$/;"	v	language:Python	class:Ring
+GAMMA_128	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^GAMMA_128 = [$/;"	v	language:Python
+GAMMA_32	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^GAMMA_32 = [$/;"	v	language:Python
+GAMMA_TABLE	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^GAMMA_TABLE = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,$/;"	v	language:Python
+I2C_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^I2C_ADDR = 0x54$/;"	v	language:Python
+id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def id(self):$/;"	m	language:Python	class:Arm
+id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def id(self):$/;"	m	language:Python	class:Led
+id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def id(self):$/;"	m	language:Python	class:Ring
+IdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^from iderror import IdError$/;"	i	language:Python
+IdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/IdError.py	/^class IdError(Exception):$/;"	c	language:Python
+IdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^from iderror import IdError$/;"	i	language:Python
+IdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^from iderror import IdError$/;"	i	language:Python
+Led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^from led import Led$/;"	i	language:Python
+led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def led(self, id, brightness):$/;"	m	language:Python	class:Board
+Led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^from led import Led$/;"	i	language:Python
+Led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^class Led:$/;"	c	language:Python
+Led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^from led import Led$/;"	i	language:Python
+Led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^from led import Led$/;"	i	language:Python
+LedBrightnessError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^class LedBrightnessError(Exception):$/;"	c	language:Python
+LedIdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^class LedIdError(Exception):$/;"	c	language:Python
+leds	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def leds(self):$/;"	m	language:Python	class:LedSet
+LedSet	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^from ledset import LedSet$/;"	i	language:Python
+LedSet	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^from ledset import LedSet$/;"	i	language:Python
+LedSet	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^class LedSet:$/;"	c	language:Python
+LedSet	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^from ledset import LedSet$/;"	i	language:Python
+LEDS_NUMBER	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    LEDS_NUMBER = 6$/;"	v	language:Python	class:Arm
+LEDS_NUMBER	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    LEDS_NUMBER = 3$/;"	v	language:Python	class:Ring
+led_state	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def led_state(self, led_address):$/;"	m	language:Python	class:Bus
+light	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def light(self, brightness):$/;"	m	language:Python	class:Led
+light	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def light(self, brightness):$/;"	m	language:Python	class:LedSet
+light_led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def light_led(self, led_address, brightness):$/;"	m	language:Python	class:Bus
+list_leds	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def list_leds(id):$/;"	m	language:Python	class:Arm
+list_leds	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def list_leds(id):$/;"	m	language:Python	class:Ring
+LOW_BRIGHTNESS	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^LOW_BRIGHTNESS = 1$/;"	v	language:Python
+MAX_BRIGHTNESS	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    MAX_BRIGHTNESS = 255$/;"	v	language:Python	class:Led
+MIN_BRIGHTNESS	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    MIN_BRIGHTNESS = 0$/;"	v	language:Python	class:Led
+NUMBER	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    NUMBER = 3$/;"	v	language:Python	class:Arm
+NUMBER	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    NUMBER = 18$/;"	v	language:Python	class:Led
+number	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def number(self):$/;"	m	language:Python	class:LedSet
+NUMBER	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    NUMBER = 6$/;"	v	language:Python	class:Ring
+off	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def off(self):$/;"	m	language:Python	class:Board
+off	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def off(self):$/;"	m	language:Python	class:Led
+off	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def off(self):$/;"	m	language:Python	class:LedSet
+pg	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^pg = PiGlow()$/;"	v	language:Python
+PiGlow	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^from piglow import PiGlow$/;"	i	language:Python
+restore	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def restore(self, backup):$/;"	m	language:Python	class:Board
+restore	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def restore(self, (buffer, state)):$/;"	m	language:Python	class:Bus
+ring	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def ring(self, id, brightness):$/;"	m	language:Python	class:Board
+Ring	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^from ring import Ring$/;"	i	language:Python
+Ring	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^class Ring(LedSet):$/;"	c	language:Python
+Ring	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^from ring import Ring$/;"	i	language:Python
+RingIdError	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^class RingIdError(IdError):$/;"	c	language:Python
+RPi	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^import RPi.GPIO as rpi$/;"	i	language:Python
+rpi	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^import RPi.GPIO as rpi$/;"	i	language:Python
+set	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def set(self, leds, brightness):$/;"	m	language:Python	class:Board
+sleep	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^from time import sleep$/;"	i	language:Python
+SMBus	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^from smbus import SMBus$/;"	i	language:Python
+test	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/test.py	/^def test(str):$/;"	f	language:Python
+update	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def update(self):$/;"	m	language:Python	class:Board
+update	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def update(self):$/;"	m	language:Python	class:Bus
+UPD_PWM_ADDR	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^UPD_PWM_ADDR = 0x16$/;"	v	language:Python
+up_to_date	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def up_to_date(self):$/;"	m	language:Python	class:Board
+up_to_date	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def up_to_date(self):$/;"	m	language:Python	class:Bus
+__ADDRESSES	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    __ADDRESSES = {$/;"	v	language:Python	class:Led
+__all__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/__init__.py	/^__all__ = ["board", "arm", "ring", "led"]$/;"	v	language:Python
+__check_brightness	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __check_brightness(brightness):$/;"	m	language:Python	class:Led	file:
+__check_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def __check_id(id):$/;"	m	language:Python	class:Arm	file:
+__check_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __check_id(id):$/;"	m	language:Python	class:Led	file:
+__check_id	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def __check_id(id):$/;"	m	language:Python	class:Ring	file:
+__COLORS_ID	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    __COLORS_ID = {"white": 1, "blue": 2, "green": 3, "yellow": 4, "orange": 5, "red": 6}$/;"	v	language:Python	class:Ring
+__DIRECTIONS_ID	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    __DIRECTIONS_ID = { "up": 1, "right": 2, "left": 3 }$/;"	v	language:Python	class:Arm
+__init_self	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/IdError.py	/^    def __init_self(self, wrong_id, type):$/;"	m	language:Python	class:IdError	file:
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def __init__(self, id, all_leds):$/;"	m	language:Python	class:Arm
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/arm.py	/^    def __init__(self, wrong_id):$/;"	m	language:Python	class:ArmIdError
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/board.py	/^    def __init__(self):$/;"	m	language:Python	class:Board
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def __init__(self):$/;"	m	language:Python	class:Bus
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __init__(self, id, bus):$/;"	m	language:Python	class:Led
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __init__(self, value):$/;"	m	language:Python	class:LedBrightnessError
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __init__(self, wrong_id):$/;"	m	language:Python	class:LedIdError
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ledset.py	/^    def __init__(self, leds):$/;"	m	language:Python	class:LedSet
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def __init__(self, id, all_leds):$/;"	m	language:Python	class:Ring
+__init__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/ring.py	/^    def __init__(self, wrong_id):$/;"	m	language:Python	class:RingIdError
+__LEDS_ID	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    __LEDS_ID = {$/;"	v	language:Python	class:Led
+__set_led	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/bus.py	/^    def __set_led(self, led_address, brightness):$/;"	m	language:Python	class:Bus	file:
+__str__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/IdError.py	/^    def __str__(self):$/;"	m	language:Python	class:IdError	file:
+__str__	/home/kshegzyaj/Code/pyglowwwwwwwwww/components/led.py	/^    def __str__(self):$/;"	m	language:Python	class:LedBrightnessError	file:
