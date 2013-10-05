@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import RPi.GPIO as rpi
 from smbus import SMBus
 

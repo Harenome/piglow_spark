@@ -1,11 +1,9 @@
-#!/usr/bin/env python
-
 from ledset import LedSet
-from iderror import IdError
+from error.iderror import IdError
 
 class RingIdError(IdError):
     def __init__(self, wrong_id):
-        IdError.__init__(self, wrong_id, "Ring")
+        IdError.__init__(self, "Ring", wrong_id)
 
 class Ring(LedSet):
     """Control a ring."""

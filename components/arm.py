@@ -1,11 +1,9 @@
-#!/usr/bin/env python
-
 from ledset import LedSet
-from iderror import IdError
+from error.iderror import IdError
 
 class ArmIdError(IdError):
     def __init__(self, wrong_id):
-        IdError.__init__(self, wrong_id, "Arm")
+        IdError.__init__(self, "Arm", wrong_id)
 
 class Arm(LedSet):
     """Control an arm."""

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from bus import Bus
 from led import Led
 from ledset import LedSet
@@ -44,9 +42,11 @@ class Board:
         self.__rings[index].light(brightness)
 
     def color(self, id, brightness):
+        """Immediately light all LEDs of the same color. Akin to ring."""
         self.ring(id, brightness)
 
     def ledset(self, leds, brightness):
+        """Immediately light a set of LEDs."""
         for led in leds:
             index = Led.correct_id(led) - 1
             self.__leds[index].light(brightness)
@@ -70,9 +70,10 @@ class Board:
         self.__bus.update()
 
     def off(self):
+        """Turn off all the LEDs."""
         for led in self.__leds:
             led.off()
 
     def up_to_date(self):
         """Check whether values have been buffered and are not effective yet."""
-        self.__bus.up_to_date()
+        return self.__bus.up_to_date()

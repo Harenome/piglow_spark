@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-
 from bus import Bus
-from iderror import IdError
+from error.brightnesserror import BrightnessError
+from error.iderror import IdError
 
 # Gamma correction...
 GAMMA_32 = [
@@ -36,15 +35,13 @@ GAMMA_TABLE = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2
 59,60,62,63,64,66,67,69,70,72,74,75,77,79,80,82,84,86,88,90,91,94,96,98,100,102,104,107,109,111,114,116,119,122,124,127,
 130,133,136,139,142,145,148,151,155,158,161,165,169,172,176,180,184,188,192,196,201,205,210,214,219,224,229,234,239,244,250,255]
 
-class LedBrightnessError(Exception):
-    def __init__(self, value):
-        self.value = value
-        self.msg = "LED brightness values must be between" + \
-            Led.MIN_BRIGHTNESS + "and" + Led.MAX_BRIGHTNESS + ". It was:" + self.value
+class LedBrightnessError(BrightnessError):
+    def __init__(self, wrong_brightness):
+        BrightnessError.__init__(self, wrong_brightness)
 
-class LedIdError(Exception):
+class LedIdError(IdError):
     def __init__(self, wrong_id):
-        IdError.__init__(self, wrong_id, "LED")
+        IdError.__init__(self, "LED", wrong_id)
 
 class Led:
     """Control a LED."""
