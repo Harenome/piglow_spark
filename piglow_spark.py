@@ -28,7 +28,24 @@ class PiGlow(Board):
     RING_AVAILABLE = Ring.available()
 
 
+## Strings for terminal printing
+NORMAL_TEXT = "\033[0m"
+BOLD_TEXT = "\033[1m"
+NOT_BOLD_TEXT = "\033[21m"
+UNDERLINED_TEXT = "\033[4m"
+NOT_UNDERLINED_TEXT = "\033[24m"
+RED_TEXT = "\033[38;5;196m"
+BLUE_TEXT = "\033[38;5;74m"
+GREEN_TEXT = "\033[38;5;148m"
+ORANGE_TEXT = "\033[38;5;214m"
+YELLOW_TEXT = "\033[38;5;227m"
+
 ## A few decorators and utilities
+def print_error(message):
+    """Print an error message."""
+    print(BOLD_TEXT + RED_TEXT + "Error" + NOT_BOLD_TEXT + ": " \
+        + message + NORMAL_TEXT)
+
 def foolproof(func):
     """Decorator to handle cases where an argument input is invalid."""
     def fooltest(self, args):
@@ -36,7 +53,7 @@ def foolproof(func):
         try:
             return func(self, args)
         except ValueError:
-            print("Error: something is wrong with the supplied arguments.")
+            print_error("something is wrong with the supplied arguments.")
         except PiGlowError as error:
             print(error.message)
 
@@ -49,7 +66,7 @@ def noargs(func):
         if args == "":
             return func(self, args)
         else:
-            print("Error: this command takes no argument.")
+            print_error("this command takes no argument.")
 
     return args_check
 
@@ -58,7 +75,7 @@ def printhelp(func):
     def print_func_help(self):
         """Print the help."""
         fun = func(self)
-        signature = fun.func_name
+        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
         argcount = fun.func_code.co_argcount
 
         if fun.func_code.co_argcount > 0:
@@ -81,7 +98,7 @@ def notimplemented(func):
     """Decorator for not implemented commands."""
     def nothing(self, args):
         """Nothing."""
-        print("This functionnality has not been implemented yet.")
+        print_error("this functionnality has not been implemented yet.")
 
     return nothing
 
@@ -98,7 +115,7 @@ class PiGlowCmd(Cmd):
         """For commands that take two arguments, the first being and ID."""
         arguments = args.split()
         if len(arguments) != 2:
-            print("Error this command takes two arguments.")
+            print_error("this command takes two arguments.")
         else:
             # Dirty workaround (can't use isistance !):
             try:
@@ -115,7 +132,9 @@ class PiGlowCmd(Cmd):
         pass
 
     def preloop(self):
-        print("Welcome to the PiGlow interpreter. Type 'help' if you don't know what to do.")
+        print("Welcome to the PiGlow Spark interpreter." \
+            + "Type '" + GREEN_TEXT + "help" + NORMAL_TEXT \
+            + "' if you don't know what to do.")
         Cmd.preloop(self)
 
     def postloop(self):
