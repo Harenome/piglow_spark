@@ -1,6 +1,8 @@
-from bus import Bus
-from error.brightnesserror import BrightnessError
-from error.iderror import IdError
+#!/usr/bin/env python
+"""Led module."""
+from components.bus import Bus
+from error.brightness_error import BrightnessError
+from error.id_error import IdError
 
 # Gamma correction...
 GAMMA_32 = [
@@ -28,22 +30,33 @@ GAMMA_128 = [
     201, 205, 210, 214, 219, 224, 229, 234,
     239, 244, 250, 255
 ]
-GAMMA_TABLE = [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,
-3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8,9,9,9,9,10,10,10,10,
-10,11,11,11,11,12,12,12,13,13,13,13,14,14,14,15,15,15,16,16,16,17,17,18,18,18,19,19,20,20,20,21,21,22,22,23,23,24,24,
-25,26,26,27,27,28,29,29,30,31,31,32,33,33,34,35,36,36,37,38,39,40,41,42,42,43,44,45,46,47,48,50,51,52,53,54,55,57,58,
-59,60,62,63,64,66,67,69,70,72,74,75,77,79,80,82,84,86,88,90,91,94,96,98,100,102,104,107,109,111,114,116,119,122,124,127,
-130,133,136,139,142,145,148,151,155,158,161,165,169,172,176,180,184,188,192,196,201,205,210,214,219,224,229,234,239,244,250,255]
+GAMMA_TABLE = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4,
+    4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7,
+    8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12,
+    12, 13, 13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 16, 17, 17, 18, 18, 18,
+    19, 19, 20, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 26, 26, 27, 27,
+    28, 29, 29, 30, 31, 31, 32, 33, 33, 34, 35, 36, 36, 37, 38, 39, 40, 41, 42,
+    42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 57, 58, 59, 60, 62,
+    63, 64, 66, 67, 69, 70, 72, 74, 75, 77, 79, 80, 82, 84, 86, 88, 90, 91, 94,
+    96, 98, 100, 102, 104, 107, 109, 111, 114, 116, 119, 122, 124, 127, 130,
+    133, 136, 139, 142, 145, 148, 151, 155, 158, 161, 165, 169, 172, 176, 180,
+    184, 188, 192, 196, 201, 205, 210, 214, 219, 224, 229, 234, 239, 244, 250,
+    255
+]
 
 class LedBrightnessError(BrightnessError):
+    """Led brightness error."""
     def __init__(self, wrong_brightness):
         BrightnessError.__init__(self, wrong_brightness)
 
 class LedIdError(IdError):
+    """Led ID error."""
     def __init__(self, wrong_id):
         IdError.__init__(self, "LED", wrong_id)
 
-class Led:
+class Led(object):
     """Control a LED."""
 
     FIRST = 1
@@ -62,22 +75,24 @@ class Led:
         "green3": 16, "blue3": 17, "white3": 18
     }
 
-    def __init__(self, id, bus):
-        led_id = Led.correct_id(id)
+    def __init__(self, identifier, bus):
+        led_id = Led.correct_id(identifier)
 
         self.__bus = bus
         self.__address = Led.__ADDRESSES[led_id]
-        self.__id = [ key for (key, value) in Led.__LEDS_ID.viewitems() \
-            if value == led_id ][0]
+        self.__id = [key for (key, value) in Led.__LEDS_ID.viewitems() \
+            if value == led_id][0]
 
     @staticmethod
-    def __check_id(id):
+    def __check_id(identifier):
         """Check if an id is valid."""
-        if (isinstance(id, int) and Led.FIRST <= id <= Led.NUMBER) \
-                or (isinstance(id, str) and id.lower() in Led.__LEDS_ID):
+        if (isinstance(identifier, int) \
+                and Led.FIRST <= identifier <= Led.NUMBER) \
+                or (isinstance(identifier, str) \
+                and identifier.lower() in Led.__LEDS_ID):
             return True
         else:
-            raise LedIdError(id)
+            raise LedIdError(identifier)
 
     @staticmethod
     def __check_brightness(brightness):
@@ -88,13 +103,13 @@ class Led:
             raise LedBrightnessError(brightness)
 
     @staticmethod
-    def correct_id(id):
+    def correct_id(identifier):
         """Get the id corresponding to a color."""
-        if Led.__check_id(id):
-            if isinstance(id, int):
-                return id
+        if Led.__check_id(identifier):
+            if isinstance(identifier, int):
+                return identifier
             else:
-                return Led.__LEDS_ID[id.lower()]
+                return Led.__LEDS_ID[identifier.lower()]
 
     @staticmethod
     def available():
@@ -116,12 +131,13 @@ class Led:
             self.__bus.light_led(self.__address, gc_value)
 
     def brightness(self):
+        """Return the brightness of a LED."""
         return self.__bus.led_state(self.__address)
 
     def off(self):
         """Switch off the LED."""
         self.light(0)
 
-    def id(self):
+    def identifier(self):
         """Get the LED's ID."""
         return self.__id

@@ -1,1 +1,1 @@
-__all__ = ["pyglowerror"]
+__all__ = ["piglow_error"]

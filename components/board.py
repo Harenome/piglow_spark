@@ -1,51 +1,53 @@
-from bus import Bus
-from led import Led
-from ledset import LedSet
-from arm import Arm
-from ring import Ring
+#!/usr/bin/env python
+"""Board module."""
+from components.bus import Bus
+from components.led import Led
+from components.led_set import LedSet
+from components.arm import Arm
+from components.ring import Ring
 
-class Board:
+class Board(object):
     """Control the board."""
     def __init__(self):
         self.__bus = Bus()
 
         self.__leds = []
-        for id in range(Led.FIRST, Led.NUMBER+1):
-            self.__leds.append(Led(id, self.__bus))
+        for identifier in range(Led.FIRST, Led.NUMBER+1):
+            self.__leds.append(Led(identifier, self.__bus))
 
         self.__arms = []
-        for id in range(Arm.FIRST, Arm.NUMBER+1):
-            self.__arms.append(Arm(id, self.__leds))
+        for identifier in range(Arm.FIRST, Arm.NUMBER+1):
+            self.__arms.append(Arm(identifier, self.__leds))
 
         self.__rings = []
-        for id in range(Ring.FIRST, Ring.NUMBER+1):
-            self.__rings.append(Ring(id, self.__leds))
+        for identifier in range(Ring.FIRST, Ring.NUMBER+1):
+            self.__rings.append(Ring(identifier, self.__leds))
 
     def all(self, brightness):
         """Immediately light all the LEDs."""
         for led in self.__leds:
             led.light(brightness)
 
-    def led(self, id, brightness):
+    def led(self, identifier, brightness):
         """Immediately light a LED."""
-        index = Led.correct_id(id) - 1
+        index = Led.correct_id(identifier) - 1
         self.__leds[index].light(brightness)
 
-    def arm(self, id, brightness):
+    def arm(self, identifier, brightness):
         """Immediately light an arm."""
-        index = Arm.correct_id(id) - 1
+        index = Arm.correct_id(identifier) - 1
         self.__arms[index].light(brightness)
 
-    def ring(self, id, brightness):
+    def ring(self, identifier, brightness):
         """Immediately light a ring."""
-        index = Ring.correct_id(id) - 1
+        index = Ring.correct_id(identifier) - 1
         self.__rings[index].light(brightness)
 
-    def color(self, id, brightness):
+    def color(self, identifier, brightness):
         """Immediately light all LEDs of the same color. Akin to ring."""
-        self.ring(id, brightness)
+        self.ring(identifier, brightness)
 
-    def ledset(self, leds, brightness):
+    def led_set(self, leds, brightness):
         """Immediately light a set of LEDs."""
         for led in leds:
             index = Led.correct_id(led) - 1

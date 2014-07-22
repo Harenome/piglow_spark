@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+"""Bus module."""
 import RPi.GPIO as rpi
 from smbus import SMBus
 
@@ -9,7 +11,7 @@ EN_ARM2_ADDR = 0x14
 EN_ARM3_ADDR = 0x15
 UPD_PWM_ADDR = 0x16
 
-class Bus:
+class Bus(object):
     """Control the Bus."""
 
     def __init__(self):
@@ -52,6 +54,7 @@ class Bus:
         self.__buffer.append((led_address, brightness))
 
     def empty_buffer(self):
+        """Empty the bus's buffer."""
         self.__buffer = []
 
     def led_state(self, led_address):
@@ -62,11 +65,11 @@ class Bus:
         """Backup the current state and buffer of the bus."""
         return (self.__buffer[:], self.__state.copy())
 
-    def restore(self, (buffer, state)):
+    def restore(self, (bus_buffer, state)):
         """Restore previously dumped state and buffer."""
         for led_address in state:
             self.light_led(led_address, state[led_address])
-        self.__buffer = buffer[:]
+        self.__buffer = bus_buffer[:]
 
     def update(self):
         """Update the LEDs according to the values in the buffer."""

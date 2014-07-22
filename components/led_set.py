@@ -1,6 +1,8 @@
-from led import Led
+#!/usr/bin/env python
+"""Led set module."""
+from components.led import Led
 
-class LedSet:
+class LedSet(object):
     """Control a set of LEDs."""
 
     def __init__(self, leds):
@@ -26,4 +28,5 @@ class LedSet:
         return len(self.__leds)
 
     def leds(self):
+        """Return the LEDs in the set."""
         return self.__leds

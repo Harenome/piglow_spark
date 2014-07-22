@@ -1,14 +1,14 @@
 #!/usr/bin/env python
+"""PiGlow Spark module."""
+
+from cmd import Cmd
 
 from components.board import Board
 from components.led import Led
 from components.led import LedBrightnessError
 from components.arm import Arm
 from components.ring import Ring
-from error.pyglowerror import PyGlowError
-
-from cmd import Cmd
-
+from error.pyglow_error import PyGlowError
 
 class PiGlow(Board):
     """Control the PiGlow board."""
@@ -36,9 +36,11 @@ class PyGlowCmd(Cmd):
         self.prompt = "Pyglow: "
 
     ## A few decorators and utilities
+    @staticmethod
     def foolproof(func):
         """Decorator to handle cases where an argument input is invalid."""
         def fooltest(self, args):
+            """Test for fools."""
             try:
                 return func(self, args)
             except ValueError:
@@ -48,9 +50,11 @@ class PyGlowCmd(Cmd):
 
         return fooltest
 
+    @staticmethod
     def noargs(func):
         """Decorator for no argument commands."""
         def args_check(self, args):
+            """Check args."""
             if args == "":
                 return func(self, args)
             else:
@@ -58,14 +62,17 @@ class PyGlowCmd(Cmd):
 
         return args_check
 
+    @staticmethod
     def printhelp(func):
+        """Decorator for help printing."""
         def print_func_help(self):
-            f = func(self)
-            signature = f.func_name
-            argcount = f.func_code.co_argcount
+            """Print the help."""
+            fun = func(self)
+            signature = fun.func_name
+            argcount = fun.func_code.co_argcount
 
-            if f.func_code.co_argcount > 0:
-                argument_names = f.func_code.co_varnames
+            if fun.func_code.co_argcount > 0:
+                argument_names = fun.func_code.co_varnames
                 if argument_names[0] == "self":
                     start = 1
                 else:
@@ -76,15 +83,16 @@ class PyGlowCmd(Cmd):
                 for arg in argument_names:
                     signature = signature + " <" + arg + ">"
 
-            print("\n" + signature + "\n" + f.func_doc + "\n")
+            print("\n" + signature + "\n" + fun.func_doc + "\n")
 
         return print_func_help
 
+    @staticmethod
     def notimplemented(func):
         """Decorator for not implemented commands."""
         def nothing(self, args):
+            """Nothing."""
             print("This functionnality has not been implemented yet.")
-            pass
 
         return nothing
 
@@ -119,108 +127,134 @@ class PyGlowCmd(Cmd):
     ## Commands
     @foolproof
     def do_all(self, args):
+        """Do all."""
         brightness = int(args)
         self.__piglow.all(brightness)
 
     @printhelp
     def help_all(self):
+        """Print the help for all."""
         return self.__piglow.all
 
     @foolproof
     def do_led(self, args):
+        """Command to light a LED."""
         PyGlowCmd.two_args(self.__piglow.led, args)
 
     @printhelp
     def help_led(self):
+        """Print the help for the led command."""
         return self.__piglow.led
 
     @foolproof
     def do_arm(self, args):
+        """Command to light an Arm."""
         PyGlowCmd.two_args(self.__piglow.arm, args)
 
     @printhelp
     def help_arm(self):
+        """Print the help for the arm command."""
         return self.__piglow.arm
 
     @foolproof
     def do_ring(self, args):
+        """Command to light a Ring."""
         PyGlowCmd.two_args(self.__piglow.ring, args)
 
     @printhelp
     def help_ring(self):
+        """Print the help for the ring command."""
         return self.__piglow.ring
 
     @foolproof
     def do_color(self, args):
+        """Command to light a Color."""
         PyGlowCmd.two_args(self.__piglow.color, args)
 
     @printhelp
     def help_color(self):
+        """Print the help for the color command."""
         return self.__piglow.color
 
     @notimplemented
     def do_ledset(self, args):
+        """Command to light a set of LEDs."""
         pass
 
     @printhelp
     def help_ledset(self):
-        return self.__piglow.ledset
+        """Print the help for the ledset command."""
+        return self.__piglow.led_set
 
     @notimplemented
     def do_buffer(self, args):
+        """Command to buffer brightnesses."""
         pass
 
     @printhelp
     def help_buffer(self):
+        """Print the help for the buffer command."""
         return self.__piglow.buffer
 
     @noargs
     @notimplemented
     def do_dump(self, args):
+        """Command to dump the current state."""
         pass
 
     @printhelp
     def help_dump(self):
+        """Print the help for the dump command."""
         return self.__piglow.dump
 
     @noargs
     @notimplemented
     def do_restore(self, args):
+        """Command to restore a state."""
         pass
 
     @printhelp
     def help_restore(self):
+        """Print the help for the restore command."""
         return self.__piglow.restore
 
     @noargs
     def do_update(self, args):
+        """Command to update the board."""
         self.__piglow.update()
 
     @printhelp
     def help_update(self):
+        """Print the help for the update command."""
         return self.__piglow.update
 
     @noargs
     def do_off(self, args):
+        """Command to switch off all LEDs."""
         self.__piglow.off()
 
     @printhelp
     def help_off(self):
+        """Print the help for the off command."""
         return self.__piglow.off
 
     @noargs
     def do_up_to_date(self, args):
+        """Command to check whether the board is up to date."""
         print(self.__piglow.up_to_date())
 
     @printhelp
     def help_up_to_date(self):
+        """Print the help for the up_to_date command."""
         return self.__piglow.up_to_date
 
     @noargs
     def do_exit(self, args):
+        """Command to exit."""
         return True
 
     def help_exit(self):
+        """Print the help for the exit command."""
         print("Exit the interpreter.")
 
 if __name__ == '__main__':

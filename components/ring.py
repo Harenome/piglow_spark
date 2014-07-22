@@ -1,5 +1,7 @@
-from ledset import LedSet
-from error.iderror import IdError
+#!/usr/bin/env python
+"""Ring module."""
+from led_set import LedSet
+from error.id_error import IdError
 
 class RingIdError(IdError):
     def __init__(self, wrong_id):
@@ -11,39 +13,45 @@ class Ring(LedSet):
     NUMBER = 6
     FIRST = 1
     LEDS_NUMBER = 3
-    __COLORS_ID = {"white": 1, "blue": 2, "green": 3, "yellow": 4, "orange": 5, "red": 6}
+    __COLORS_ID = {"white": 1, "blue": 2, "green": 3, "yellow": 4,
+        "orange": 5, "red": 6
+    }
 
-    def __init__(self, id, all_leds):
-        ring_id = Ring.correct_id(id)
+    def __init__(self, identifier, all_leds):
+        ring_id = Ring.correct_id(identifier)
         indexes = Ring.list_leds(ring_id)
-        leds = [ all_leds[i-1] for i in indexes ]
+        leds = [all_leds[i-1] for i in indexes]
 
         LedSet.__init__(self, leds)
-        self.__id = [ key for (key, value) in Ring.__COLORS_ID.viewitems() \
-            if value == ring_id ][0]
+        self.__id = [key for (key, value) in Ring.__COLORS_ID.viewitems() \
+            if value == ring_id][0]
 
     @staticmethod
-    def __check_id(id):
-        if (isinstance(id, int) and Ring.FIRST <= id <= Ring.NUMBER) \
-            or (isinstance(id, str) and id.lower() in Ring.__COLORS_ID):
+    def __check_id(identifier):
+        """Check the ID."""
+        if (isinstance(identifier, int) \
+            and Ring.FIRST <= identifier <= Ring.NUMBER) \
+            or (isinstance(identifier, str) \
+            and identifier.lower() in Ring.__COLORS_ID):
             return True
         else:
-            raise RingIdError(id)
+            raise RingIdError(identifier)
 
     @staticmethod
-    def correct_id(id):
-        if Ring.__check_id(id):
-            if isinstance(id, int):
-                return id
+    def correct_id(identifier):
+        """Return the correct ID."""
+        if Ring.__check_id(identifier):
+            if isinstance(identifier, int):
+                return identifier
             else:
-                return Ring.__COLORS_ID[id.lower()]
+                return Ring.__COLORS_ID[identifier.lower()]
 
     @staticmethod
-    def list_leds(id):
+    def list_leds(identifier):
         """List the LEDS corresponding to a ring id."""
-        ring_id = Ring.correct_id(id)
-        ring_start = range(Ring.NUMBER,0,-1)[ring_id-1]
-        leds = [ ring_start + Ring.NUMBER * i for i in range(Ring.LEDS_NUMBER) ]
+        ring_id = Ring.correct_id(identifier)
+        ring_start = range(Ring.NUMBER, 0, -1)[ring_id-1]
+        leds = [ring_start + Ring.NUMBER * i for i in range(Ring.LEDS_NUMBER)]
 
         return leds
 
@@ -52,5 +60,6 @@ class Ring(LedSet):
         """List the available rings/colors."""
         return Ring.__COLORS_ID.keys()
 
-    def id(self):
+    def identifier(self):
+        """Return the ID of the ring."""
         return self.__id
