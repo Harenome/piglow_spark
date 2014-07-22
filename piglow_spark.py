@@ -8,7 +8,7 @@ from components.led import Led
 from components.led import LedBrightnessError
 from components.arm import Arm
 from components.ring import Ring
-from error.pyglow_error import PyGlowError
+from error.piglow_error import PiGlowError
 
 class PiGlow(Board):
     """Control the PiGlow board."""
@@ -28,73 +28,70 @@ class PiGlow(Board):
     RING_AVAILABLE = Ring.available()
 
 
-class PyGlowCmd(Cmd):
-    """PyGlow interpreter."""
+## A few decorators and utilities
+def foolproof(func):
+    """Decorator to handle cases where an argument input is invalid."""
+    def fooltest(self, args):
+        """Test for fools."""
+        try:
+            return func(self, args)
+        except ValueError:
+            print("Error: something is wrong with the supplied arguments.")
+        except PiGlowError as error:
+            print(error.message)
+
+    return fooltest
+
+def noargs(func):
+    """Decorator for no argument commands."""
+    def args_check(self, args):
+        """Check args."""
+        if args == "":
+            return func(self, args)
+        else:
+            print("Error: this command takes no argument.")
+
+    return args_check
+
+def printhelp(func):
+    """Decorator for help printing."""
+    def print_func_help(self):
+        """Print the help."""
+        fun = func(self)
+        signature = fun.func_name
+        argcount = fun.func_code.co_argcount
+
+        if fun.func_code.co_argcount > 0:
+            argument_names = fun.func_code.co_varnames
+            if argument_names[0] == "self":
+                start = 1
+            else:
+                start = 0
+            # 'co_varnames' include all variables of the code object.
+            # We only need those that are arguments of the function.
+            argument_names = argument_names[start:argcount]
+            for arg in argument_names:
+                signature = signature + " <" + arg + ">"
+
+        print("\n" + signature + "\n" + fun.func_doc + "\n")
+
+    return print_func_help
+
+def notimplemented(func):
+    """Decorator for not implemented commands."""
+    def nothing(self, args):
+        """Nothing."""
+        print("This functionnality has not been implemented yet.")
+
+    return nothing
+
+
+class PiGlowCmd(Cmd):
+    """PiGlow interpreter."""
     def __init__(self, completekey='tab', stdin=None, stdout=None):
         self.__piglow = PiGlow()
         Cmd.__init__(self, completekey, stdin, stdout)
-        self.prompt = "Pyglow: "
-
-    ## A few decorators and utilities
-    @staticmethod
-    def foolproof(func):
-        """Decorator to handle cases where an argument input is invalid."""
-        def fooltest(self, args):
-            """Test for fools."""
-            try:
-                return func(self, args)
-            except ValueError:
-                print("Error: something is wrong with the supplied arguments.")
-            except PyGlowError as error:
-                print(error.message)
-
-        return fooltest
-
-    @staticmethod
-    def noargs(func):
-        """Decorator for no argument commands."""
-        def args_check(self, args):
-            """Check args."""
-            if args == "":
-                return func(self, args)
-            else:
-                print("Error: this command takes no argument.")
-
-        return args_check
-
-    @staticmethod
-    def printhelp(func):
-        """Decorator for help printing."""
-        def print_func_help(self):
-            """Print the help."""
-            fun = func(self)
-            signature = fun.func_name
-            argcount = fun.func_code.co_argcount
-
-            if fun.func_code.co_argcount > 0:
-                argument_names = fun.func_code.co_varnames
-                if argument_names[0] == "self":
-                    start = 1
-                else:
-                    start = 0
-                # 'co_varnames' include all variables of the code object.
-                # We only need those that are arguments of the function.
-                argument_names = argument_names[start:argcount]
-                for arg in argument_names:
-                    signature = signature + " <" + arg + ">"
-
-            print("\n" + signature + "\n" + fun.func_doc + "\n")
-
-        return print_func_help
-
-    @staticmethod
-    def notimplemented(func):
-        """Decorator for not implemented commands."""
-        def nothing(self, args):
-            """Nothing."""
-            print("This functionnality has not been implemented yet.")
-
-        return nothing
+        self.prompt = "PiGlow Spark: "
 
     @staticmethod
     def two_args(func, args):
@@ -118,7 +115,7 @@ class PyGlowCmd(Cmd):
         pass
 
     def preloop(self):
-        print("Welcome to the PyGlow interpreter. Type 'help' if you don't know what to do.")
+        print("Welcome to the PiGlow interpreter. Type 'help' if you don't know what to do.")
         Cmd.preloop(self)
 
     def postloop(self):
@@ -139,7 +136,7 @@ class PyGlowCmd(Cmd):
     @foolproof
     def do_led(self, args):
         """Command to light a LED."""
-        PyGlowCmd.two_args(self.__piglow.led, args)
+        PiGlowCmd.two_args(self.__piglow.led, args)
 
     @printhelp
     def help_led(self):
@@ -149,7 +146,7 @@ class PyGlowCmd(Cmd):
     @foolproof
     def do_arm(self, args):
         """Command to light an Arm."""
-        PyGlowCmd.two_args(self.__piglow.arm, args)
+        PiGlowCmd.two_args(self.__piglow.arm, args)
 
     @printhelp
     def help_arm(self):
@@ -159,7 +156,7 @@ class PyGlowCmd(Cmd):
     @foolproof
     def do_ring(self, args):
         """Command to light a Ring."""
-        PyGlowCmd.two_args(self.__piglow.ring, args)
+        PiGlowCmd.two_args(self.__piglow.ring, args)
 
     @printhelp
     def help_ring(self):
@@ -169,7 +166,7 @@ class PyGlowCmd(Cmd):
     @foolproof
     def do_color(self, args):
         """Command to light a Color."""
-        PyGlowCmd.two_args(self.__piglow.color, args)
+        PiGlowCmd.two_args(self.__piglow.color, args)
 
     @printhelp
     def help_color(self):
@@ -258,5 +255,5 @@ class PyGlowCmd(Cmd):
         print("Exit the interpreter.")
 
 if __name__ == '__main__':
-    interpreter = PyGlowCmd()
+    interpreter = PiGlowCmd()
     interpreter.cmdloop()
