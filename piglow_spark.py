@@ -43,7 +43,7 @@ YELLOW_TEXT = "\033[38;5;227m"
 ## A few decorators and utilities
 def print_error(message):
     """Print an error message."""
-    print(BOLD_TEXT + RED_TEXT + "Error" + NOT_BOLD_TEXT + ": " \
+    print(BOLD_TEXT + RED_TEXT + "Error" + NORMAL_TEXT + RED_TEXT + ": " \
         + message + NORMAL_TEXT)
 
 def foolproof(func):
@@ -55,7 +55,7 @@ def foolproof(func):
         except ValueError:
             print_error("something is wrong with the supplied arguments.")
         except PiGlowError as error:
-            print(error.message)
+            print_error(error.message)
 
     return fooltest
 
