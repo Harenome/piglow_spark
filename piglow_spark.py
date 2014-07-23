@@ -28,7 +28,28 @@ class PiGlow(Board):
     RING_AVAILABLE = Ring.available()
 
 
+## Strings for terminal printing
+NORMAL_TEXT = "\033[0m"
+BOLD_TEXT = "\033[1m"
+DIM_TEXT = "\033[2m"
+UNDERLINED_TEXT = "\033[4m"
+RED_TEXT = "\033[38;5;196m"
+BLUE_TEXT = "\033[38;5;74m"
+GREEN_TEXT = "\033[38;5;148m"
+ORANGE_TEXT = "\033[38;5;214m"
+YELLOW_TEXT = "\033[38;5;227m"
+
 ## A few decorators and utilities
+def print_error(message):
+    """Print an error message."""
+    print(BOLD_TEXT + RED_TEXT + "Error" + NORMAL_TEXT + RED_TEXT + ": " \
+        + message + NORMAL_TEXT)
+
+def print_warning(message):
+    """Print a warning message."""
+    print(BOLD_TEXT + ORANGE_TEXT + "Warning" + NORMAL_TEXT + ORANGE_TEXT \
+        + ": " + message + NORMAL_TEXT)
+
 def foolproof(func):
     """Decorator to handle cases where an argument input is invalid."""
     def fooltest(self, args):
@@ -36,9 +57,9 @@ def foolproof(func):
         try:
             return func(self, args)
         except ValueError:
-            print("Error: something is wrong with the supplied arguments.")
+            print_error("something is wrong with the supplied arguments.")
         except PiGlowError as error:
-            print(error.message)
+            print_error(error.message)
 
     return fooltest
 
@@ -49,7 +70,7 @@ def noargs(func):
         if args == "":
             return func(self, args)
         else:
-            print("Error: this command takes no argument.")
+            print_error("this command takes no argument.")
 
     return args_check
 
@@ -58,7 +79,7 @@ def printhelp(func):
     def print_func_help(self):
         """Print the help."""
         fun = func(self)
-        signature = fun.func_name
+        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
         argcount = fun.func_code.co_argcount
 
         if fun.func_code.co_argcount > 0:
@@ -77,11 +98,37 @@ def printhelp(func):
 
     return print_func_help
 
+def printhelpnotimpl(func):
+    """Decorator for help printing."""
+    def print_func_help(self):
+        """Print the help."""
+        fun = func(self)
+        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
+        argcount = fun.func_code.co_argcount
+
+        if fun.func_code.co_argcount > 0:
+            argument_names = fun.func_code.co_varnames
+            if argument_names[0] == "self":
+                start = 1
+            else:
+                start = 0
+            # 'co_varnames' include all variables of the code object.
+            # We only need those that are arguments of the function.
+            argument_names = argument_names[start:argcount]
+            for arg in argument_names:
+                signature = signature + " <" + UNDERLINED_TEXT + arg \
+                    + NORMAL_TEXT + ">"
+
+        print("\n" + signature + "\n" + fun.func_doc)
+        print_warning("this has not been implemented yet.\n")
+
+    return print_func_help
+
 def notimplemented(func):
     """Decorator for not implemented commands."""
     def nothing(self, args):
         """Nothing."""
-        print("This functionnality has not been implemented yet.")
+        print_error("this functionnality has not been implemented yet.")
 
     return nothing
 
@@ -91,14 +138,15 @@ class PiGlowCmd(Cmd):
     def __init__(self, completekey='tab', stdin=None, stdout=None):
         self.__piglow = PiGlow()
         Cmd.__init__(self, completekey, stdin, stdout)
-        self.prompt = "PiGlow Spark: "
+        self.prompt = BOLD_TEXT + "PiGlow Spark" + DIM_TEXT + " >>>" \
+            + NORMAL_TEXT + " "
 
     @staticmethod
     def two_args(func, args):
         """For commands that take two arguments, the first being and ID."""
         arguments = args.split()
         if len(arguments) != 2:
-            print("Error this command takes two arguments.")
+            print_error("this command takes two arguments.")
         else:
             # Dirty workaround (can't use isistance !):
             try:
@@ -115,7 +163,9 @@ class PiGlowCmd(Cmd):
         pass
 
     def preloop(self):
-        print("Welcome to the PiGlow interpreter. Type 'help' if you don't know what to do.")
+        print("Welcome to the PiGlow Spark interpreter.\n" \
+            + "Type '" + GREEN_TEXT + "help" + NORMAL_TEXT \
+            + "' if you don't know what to do.")
         Cmd.preloop(self)
 
     def postloop(self):
@@ -178,7 +228,7 @@ class PiGlowCmd(Cmd):
         """Command to light a set of LEDs."""
         pass
 
-    @printhelp
+    @printhelpnotimpl
     def help_ledset(self):
         """Print the help for the ledset command."""
         return self.__piglow.led_set
@@ -188,7 +238,7 @@ class PiGlowCmd(Cmd):
         """Command to buffer brightnesses."""
         pass
 
-    @printhelp
+    @printhelpnotimpl
     def help_buffer(self):
         """Print the help for the buffer command."""
         return self.__piglow.buffer
@@ -199,7 +249,7 @@ class PiGlowCmd(Cmd):
         """Command to dump the current state."""
         pass
 
-    @printhelp
+    @printhelpnotimpl
     def help_dump(self):
         """Print the help for the dump command."""
         return self.__piglow.dump
@@ -210,7 +260,7 @@ class PiGlowCmd(Cmd):
         """Command to restore a state."""
         pass
 
-    @printhelp
+    @printhelpnotimpl
     def help_restore(self):
         """Print the help for the restore command."""
         return self.__piglow.restore

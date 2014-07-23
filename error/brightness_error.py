@@ -8,5 +8,5 @@ class BrightnessError(PiGlowError):
     def __init__(self, wrong_brightness):
         PiGlowError.__init__(self, ("brightness", wrong_brightness))
         self.wrong_brightness = wrong_brightness
-        self.message = "Error: Invalid brightness value. (" \
+        self.message = "Invalid brightness value. (" \
             + str(self.wrong_brightness) + ")"
