@@ -47,8 +47,12 @@ $ sudo reboot
 ### Interactive mode
 Enter interactive mode:
 ```bash
-$ cd piglow_spark
-$ sudo ./piglow_spark.py
+$ sudo ./interactive.py
+```
+
+### Example
+```bash
+$ sudo ./example.py
 ```
 
 Credits

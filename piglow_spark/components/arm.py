@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Arm module."""
-from components.led_set import LedSet
-from error.id_error import IdError
+from piglow_spark.components.led_set import LedSet
+from piglow_spark.error.id_error import IdError
 
 class ArmIdError(IdError):
     """Arm ID error."""

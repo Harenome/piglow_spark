@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """ID error module."""
-from error.piglow_error import PiGlowError
+from piglow_spark.error.piglow_error import PiGlowError
 
 class IdError(PiGlowError):
     """ID error."""

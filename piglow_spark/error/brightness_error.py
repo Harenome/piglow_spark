@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Brightness error module."""
-from error.piglow_error import PiGlowError
+from piglow_spark.error.piglow_error import PiGlowError
 
 class BrightnessError(PiGlowError):
     """Brightness error."""

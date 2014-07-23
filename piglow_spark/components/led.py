@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """Led module."""
-from components.bus import Bus
-from error.brightness_error import BrightnessError
-from error.id_error import IdError
+from piglow_spark.components.bus import Bus
+from piglow_spark.error.brightness_error import BrightnessError
+from piglow_spark.error.id_error import IdError
 
 # Gamma correction...
 GAMMA_32 = [
