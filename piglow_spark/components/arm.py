@@ -57,7 +57,9 @@ class Arm(LedSet):
     @staticmethod
     def available():
         """List the available arms."""
-        return Arm.__DIRECTIONS_ID.keys()
+        arms = Arm.__DIRECTIONS_ID.keys()[:]
+        arms.sort()
+        return arms
 
     def identifier(self):
         """Return the Arm's ID."""

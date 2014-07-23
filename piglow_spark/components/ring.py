@@ -58,7 +58,9 @@ class Ring(LedSet):
     @staticmethod
     def available():
         """List the available rings/colors."""
-        return Ring.__COLORS_ID.keys()
+        rings = Ring.__COLORS_ID.keys()[:]
+        rings.sort()
+        return rings
 
     def identifier(self):
         """Return the ID of the ring."""

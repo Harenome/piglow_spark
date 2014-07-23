@@ -114,7 +114,9 @@ class Led(object):
     @staticmethod
     def available():
         """List the available LEDs."""
-        return Led.__LEDS_ID.keys()
+        leds = Led.__LEDS_ID.keys()[:]
+        leds.sort()
+        return leds
 
     def buffer(self, brightness):
         """Buffer a brightness value."""
