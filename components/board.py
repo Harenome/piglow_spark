@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """Board module."""
-from components.bus import Bus
-from components.led import Led
-from components.led_set import LedSet
-from components.arm import Arm
-from components.ring import Ring
+from piglow_spark.components.bus import Bus
+from piglow_spark.components.led import Led
+from piglow_spark.components.led_set import LedSet
+from piglow_spark.components.arm import Arm
+from piglow_spark.components.ring import Ring
 
 class Board(object):
     """Control the board."""

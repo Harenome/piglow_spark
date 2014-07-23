@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """PiGlow module."""
 
-from components.board import Board
-from components.led import Led
-from components.arm import Arm
-from components.ring import Ring
+from piglow_spark.components.board import Board
+from piglow_spark.components.led import Led
+from piglow_spark.components.arm import Arm
+from piglow_spark.components.ring import Ring
 
 class PiGlow(Board):
     """Control the PiGlow board."""

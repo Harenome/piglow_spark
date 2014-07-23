@@ -3,8 +3,8 @@
 
 from cmd import Cmd
 
-from piglow import PiGlow
-from error.piglow_error import PiGlowError
+from piglow_spark.piglow import PiGlow
+from piglow_spark.error.piglow_error import PiGlowError
 
 ## Strings for terminal printing
 NORMAL_TEXT = "\033[0m"

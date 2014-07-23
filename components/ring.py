@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Ring module."""
-from led_set import LedSet
-from error.id_error import IdError
+from piglow_spark.components.led_set import LedSet
+from piglow_spark.error.id_error import IdError
 
 class RingIdError(IdError):
     def __init__(self, wrong_id):

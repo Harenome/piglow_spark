@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """Led set module."""
-from components.led import Led
+from piglow_spark.components.led import Led
 
 class LedSet(object):
     """Control a set of LEDs."""
