@@ -282,6 +282,3 @@ class PiGlowCmd(Cmd):
         """Print the help for the exit command."""
         print("Exit the interpreter.")
 
-if __name__ == '__main__':
-    interpreter = PiGlowCmd()
-    interpreter.cmdloop()
