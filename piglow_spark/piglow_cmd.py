@@ -150,6 +150,50 @@ class PiGlowCmd(Cmd):
         Cmd.postloop(self)
 
     ## Commands
+    def do_list(self, args):
+        """Command to list IDs."""
+        def print_ids(ids):
+            for i in ids:
+                print(i)
+        def print_leds():
+            print("\nLEDs:\n-----")
+            print_ids(self.__piglow.LED_AVAILABLE)
+        def print_rings():
+            print("\nRings:\n------")
+            print_ids(self.__piglow.RING_AVAILABLE)
+        def print_arms():
+            print("\nArms:\n-----")
+            print_ids(self.__piglow.ARM_AVAILABLE)
+
+        if args == "":
+            print_leds()
+            print_rings()
+            print_arms()
+            print("")
+        else:
+            arguments = args.split()
+            if len(arguments) != 1:
+                print_error("This command takes 0 or 1 argument.")
+            elif args == "leds":
+                print_leds()
+                print("")
+            elif args == "rings":
+                print_rings()
+                print("")
+            elif args == "arms":
+                print_arms()
+                print("")
+            else:
+                print_error("Invalid argument.")
+
+    def help_list(self):
+        """Print the help for the list command."""
+        print("\n" + BOLD_TEXT + "list" + NORMAL_TEXT + " [" \
+            + UNDERLINED_TEXT + "leds" + NORMAL_TEXT + " | " \
+            + UNDERLINED_TEXT + "rings" + NORMAL_TEXT + " | " \
+            + UNDERLINED_TEXT + "arms" + NORMAL_TEXT + "]")
+        print("Print the available IDs.\n")
+
     @foolproof
     def do_all(self, args):
         """Do all."""
