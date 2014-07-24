@@ -67,9 +67,9 @@ class Board(object):
         """Restore previously dumped state."""
         self.__bus.restore(backup)
 
-    def update(self):
-        """Update the Piglow according to the values previously buffered."""
-        self.__bus.update()
+    def flush(self):
+        """Flush the PiGlow's buffer."""
+        self.__bus.flush()
 
     def off(self):
         """Turn off all the LEDs."""
