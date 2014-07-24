@@ -52,27 +52,33 @@ def noargs(func):
 
     return args_check
 
+def print_func_help_aux(self, func):
+    """Auxilary function for help printing."""
+    fun = func(self)
+    signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
+    argcount = fun.func_code.co_argcount
+
+    if fun.func_code.co_argcount > 0:
+        argument_names = fun.func_code.co_varnames
+        if argument_names[0] == "self":
+            start = 1
+        else:
+            start = 0
+        # 'co_varnames' include all variables of the code object.
+        # We only need those that are arguments of the function.
+        argument_names = argument_names[start:argcount]
+        for arg in argument_names:
+            signature = signature + " <" + UNDERLINED_TEXT + arg \
+                + NORMAL_TEXT + ">"
+
+    print("\n" + signature + "\n" + fun.func_doc)
+
 def printhelp(func):
     """Decorator for help printing."""
     def print_func_help(self):
         """Print the help."""
-        fun = func(self)
-        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
-        argcount = fun.func_code.co_argcount
-
-        if fun.func_code.co_argcount > 0:
-            argument_names = fun.func_code.co_varnames
-            if argument_names[0] == "self":
-                start = 1
-            else:
-                start = 0
-            # 'co_varnames' include all variables of the code object.
-            # We only need those that are arguments of the function.
-            argument_names = argument_names[start:argcount]
-            for arg in argument_names:
-                signature = signature + " <" + arg + ">"
-
-        print("\n" + signature + "\n" + fun.func_doc + "\n")
+        print_func_help_aux(self, func)
+        print("")
 
     return print_func_help
 
@@ -80,24 +86,7 @@ def printhelpnotimpl(func):
     """Decorator for help printing."""
     def print_func_help(self):
         """Print the help."""
-        fun = func(self)
-        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
-        argcount = fun.func_code.co_argcount
-
-        if fun.func_code.co_argcount > 0:
-            argument_names = fun.func_code.co_varnames
-            if argument_names[0] == "self":
-                start = 1
-            else:
-                start = 0
-            # 'co_varnames' include all variables of the code object.
-            # We only need those that are arguments of the function.
-            argument_names = argument_names[start:argcount]
-            for arg in argument_names:
-                signature = signature + " <" + UNDERLINED_TEXT + arg \
-                    + NORMAL_TEXT + ">"
-
-        print("\n" + signature + "\n" + fun.func_doc)
+        print_func_help_aux(self, func)
         print_warning("this has not been implemented yet.\n")
 
     return print_func_help
@@ -115,13 +104,14 @@ class PiGlowCmd(Cmd):
     """PiGlow interpreter."""
     def __init__(self, completekey='tab', stdin=None, stdout=None):
         self.__piglow = PiGlow()
+        self.__saved_state = self.__piglow.dump()
         Cmd.__init__(self, completekey, stdin, stdout)
         self.prompt = BOLD_TEXT + "PiGlow Spark" + DIM_TEXT + " >>>" \
             + NORMAL_TEXT + " "
 
     @staticmethod
-    def two_args(func, args):
-        """For commands that take two arguments, the first being and ID."""
+    def two_args_id(func, args):
+        """For commands that take an ID and a brightness as arguments."""
         arguments = args.split()
         if len(arguments) != 2:
             print_error("this command takes two arguments.")
@@ -134,6 +124,27 @@ class PiGlowCmd(Cmd):
                 return func(arguments[0], int(arguments[1]))
             # If arguments[0] is a string representing an int.
             return func(int(arguments[0]), int(arguments[1]))
+
+    @staticmethod
+    def two_args_set(func, args):
+        """For commands that take a LED set and a brightness as arguments."""
+        if "[" in args and "]" in args:
+            try:
+                arguments = args.split("]")
+                arguments[0] += "]"
+                leds = eval(arguments[0])
+                brightness = int(arguments[1])
+                func(leds, brightness)
+            except (ValueError, NameError):
+                print_error("Something is wrong with the supplied arguments.")
+            except SyntaxError:
+                print_error("The list is not valid.")
+            except PiGlowError as error:
+                print_error(error.message)
+        else:
+            print_error("This command expects a list and a brightness.")
+
+
 
     ## Redefinition of some inherited methods
     def emptyline(self):
@@ -150,6 +161,50 @@ class PiGlowCmd(Cmd):
         Cmd.postloop(self)
 
     ## Commands
+    def do_list(self, args):
+        """Command to list IDs."""
+        def print_ids(ids):
+            for i in ids:
+                print(i)
+        def print_leds():
+            print("\nLEDs:\n-----")
+            print_ids(self.__piglow.LED_AVAILABLE)
+        def print_rings():
+            print("\nRings:\n------")
+            print_ids(self.__piglow.RING_AVAILABLE)
+        def print_arms():
+            print("\nArms:\n-----")
+            print_ids(self.__piglow.ARM_AVAILABLE)
+
+        if args == "":
+            print_leds()
+            print_rings()
+            print_arms()
+            print("")
+        else:
+            arguments = args.split()
+            if len(arguments) != 1:
+                print_error("This command takes 0 or 1 argument.")
+            elif args == "leds":
+                print_leds()
+                print("")
+            elif args == "rings":
+                print_rings()
+                print("")
+            elif args == "arms":
+                print_arms()
+                print("")
+            else:
+                print_error("Invalid argument.")
+
+    def help_list(self):
+        """Print the help for the list command."""
+        print("\n" + BOLD_TEXT + "list" + NORMAL_TEXT + " [" \
+            + UNDERLINED_TEXT + "leds" + NORMAL_TEXT + " | " \
+            + UNDERLINED_TEXT + "rings" + NORMAL_TEXT + " | " \
+            + UNDERLINED_TEXT + "arms" + NORMAL_TEXT + "]")
+        print("Print the available IDs.\n")
+
     @foolproof
     def do_all(self, args):
         """Do all."""
@@ -164,7 +219,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_led(self, args):
         """Command to light a LED."""
-        PiGlowCmd.two_args(self.__piglow.led, args)
+        PiGlowCmd.two_args_id(self.__piglow.led, args)
 
     @printhelp
     def help_led(self):
@@ -174,7 +229,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_arm(self, args):
         """Command to light an Arm."""
-        PiGlowCmd.two_args(self.__piglow.arm, args)
+        PiGlowCmd.two_args_id(self.__piglow.arm, args)
 
     @printhelp
     def help_arm(self):
@@ -184,7 +239,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_ring(self, args):
         """Command to light a Ring."""
-        PiGlowCmd.two_args(self.__piglow.ring, args)
+        PiGlowCmd.two_args_id(self.__piglow.ring, args)
 
     @printhelp
     def help_ring(self):
@@ -194,51 +249,47 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_color(self, args):
         """Command to light a Color."""
-        PiGlowCmd.two_args(self.__piglow.color, args)
+        PiGlowCmd.two_args_id(self.__piglow.color, args)
 
     @printhelp
     def help_color(self):
         """Print the help for the color command."""
         return self.__piglow.color
 
-    @notimplemented
-    def do_ledset(self, args):
+    def do_led_set(self, args):
         """Command to light a set of LEDs."""
-        pass
+        PiGlowCmd.two_args_set(self.__piglow.led_set, args)
 
-    @printhelpnotimpl
-    def help_ledset(self):
+    @printhelp
+    def help_led_set(self):
         """Print the help for the ledset command."""
         return self.__piglow.led_set
 
-    @notimplemented
     def do_buffer(self, args):
         """Command to buffer brightnesses."""
-        pass
+        PiGlowCmd.two_args_set(self.__piglow.buffer, args)
 
-    @printhelpnotimpl
+    @printhelp
     def help_buffer(self):
         """Print the help for the buffer command."""
         return self.__piglow.buffer
 
     @noargs
-    @notimplemented
     def do_dump(self, args):
         """Command to dump the current state."""
-        pass
+        self.__saved_state = self.__piglow.dump()
 
-    @printhelpnotimpl
+    @printhelp
     def help_dump(self):
         """Print the help for the dump command."""
         return self.__piglow.dump
 
     @noargs
-    @notimplemented
     def do_restore(self, args):
         """Command to restore a state."""
-        pass
+        self.__piglow.restore(self.__saved_state)
 
-    @printhelpnotimpl
+    @printhelp
     def help_restore(self):
         """Print the help for the restore command."""
         return self.__piglow.restore
