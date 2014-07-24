@@ -52,27 +52,33 @@ def noargs(func):
 
     return args_check
 
+def print_func_help_aux(self, func):
+    """Auxilary function for help printing."""
+    fun = func(self)
+    signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
+    argcount = fun.func_code.co_argcount
+
+    if fun.func_code.co_argcount > 0:
+        argument_names = fun.func_code.co_varnames
+        if argument_names[0] == "self":
+            start = 1
+        else:
+            start = 0
+        # 'co_varnames' include all variables of the code object.
+        # We only need those that are arguments of the function.
+        argument_names = argument_names[start:argcount]
+        for arg in argument_names:
+            signature = signature + " <" + UNDERLINED_TEXT + arg \
+                + NORMAL_TEXT + ">"
+
+    print("\n" + signature + "\n" + fun.func_doc)
+
 def printhelp(func):
     """Decorator for help printing."""
     def print_func_help(self):
         """Print the help."""
-        fun = func(self)
-        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
-        argcount = fun.func_code.co_argcount
-
-        if fun.func_code.co_argcount > 0:
-            argument_names = fun.func_code.co_varnames
-            if argument_names[0] == "self":
-                start = 1
-            else:
-                start = 0
-            # 'co_varnames' include all variables of the code object.
-            # We only need those that are arguments of the function.
-            argument_names = argument_names[start:argcount]
-            for arg in argument_names:
-                signature = signature + " <" + arg + ">"
-
-        print("\n" + signature + "\n" + fun.func_doc + "\n")
+        print_func_help_aux(self, func)
+        print("")
 
     return print_func_help
 
@@ -80,24 +86,7 @@ def printhelpnotimpl(func):
     """Decorator for help printing."""
     def print_func_help(self):
         """Print the help."""
-        fun = func(self)
-        signature = BOLD_TEXT + fun.func_name + NORMAL_TEXT
-        argcount = fun.func_code.co_argcount
-
-        if fun.func_code.co_argcount > 0:
-            argument_names = fun.func_code.co_varnames
-            if argument_names[0] == "self":
-                start = 1
-            else:
-                start = 0
-            # 'co_varnames' include all variables of the code object.
-            # We only need those that are arguments of the function.
-            argument_names = argument_names[start:argcount]
-            for arg in argument_names:
-                signature = signature + " <" + UNDERLINED_TEXT + arg \
-                    + NORMAL_TEXT + ">"
-
-        print("\n" + signature + "\n" + fun.func_doc)
+        print_func_help_aux(self, func)
         print_warning("this has not been implemented yet.\n")
 
     return print_func_help
