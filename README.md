@@ -37,6 +37,22 @@ exist:
 # blacklist i2c-bcm2708
 ```
 
+#### Get the rights
+By default, only ```root``` is allowed to access i2c devices. The following
+lines will create (if it does not already exist) the group ```i2c``` and allow
+it to access i2c devices:
+
+```bash
+$ groupadd i2c
+$ echo 'KERNEL=="i2c-[0-9]*", GROUP="i2c"' >> /etc/udev/rules.d/10-local.rules
+```
+
+Once the ```i2c``` group exists, add users to the group:
+
+```bash
+$ usermod -aG i2c <username>
+```
+
 #### Reboot
 Once you have completed the steps above, restart your Raspberry Pi.
 
@@ -47,12 +63,12 @@ $ sudo reboot
 ### Interactive mode
 Enter interactive mode:
 ```bash
-$ sudo ./interactive.py
+$ ./interactive.py
 ```
 
 ### Example
 ```bash
-$ sudo ./example.py
+$ ./example.py
 ```
 
 Credits
