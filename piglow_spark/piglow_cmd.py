@@ -104,6 +104,7 @@ class PiGlowCmd(Cmd):
     """PiGlow interpreter."""
     def __init__(self, completekey='tab', stdin=None, stdout=None):
         self.__piglow = PiGlow()
+        self.__saved_state = self.__piglow.dump()
         Cmd.__init__(self, completekey, stdin, stdout)
         self.prompt = BOLD_TEXT + "PiGlow Spark" + DIM_TEXT + " >>>" \
             + NORMAL_TEXT + " "
@@ -255,23 +256,21 @@ class PiGlowCmd(Cmd):
         return self.__piglow.buffer
 
     @noargs
-    @notimplemented
     def do_dump(self, args):
         """Command to dump the current state."""
-        pass
+        self.__saved_state = self.__piglow.dump()
 
-    @printhelpnotimpl
+    @printhelp
     def help_dump(self):
         """Print the help for the dump command."""
         return self.__piglow.dump
 
     @noargs
-    @notimplemented
     def do_restore(self, args):
         """Command to restore a state."""
-        pass
+        self.__piglow.restore(self.__saved_state)
 
-    @printhelpnotimpl
+    @printhelp
     def help_restore(self):
         """Print the help for the restore command."""
         return self.__piglow.restore
