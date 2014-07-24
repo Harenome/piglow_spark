@@ -110,8 +110,8 @@ class PiGlowCmd(Cmd):
             + NORMAL_TEXT + " "
 
     @staticmethod
-    def two_args(func, args):
-        """For commands that take two arguments, the first being and ID."""
+    def two_args_id(func, args):
+        """For commands that take an ID and a brightness as arguments."""
         arguments = args.split()
         if len(arguments) != 2:
             print_error("this command takes two arguments.")
@@ -124,6 +124,27 @@ class PiGlowCmd(Cmd):
                 return func(arguments[0], int(arguments[1]))
             # If arguments[0] is a string representing an int.
             return func(int(arguments[0]), int(arguments[1]))
+
+    @staticmethod
+    def two_args_set(func, args):
+        """For commands that take a LED set and a brightness as arguments."""
+        if "[" in args and "]" in args:
+            try:
+                arguments = args.split("]")
+                arguments[0] += "]"
+                leds = eval(arguments[0])
+                brightness = int(arguments[1])
+                func(leds, brightness)
+            except (ValueError, NameError):
+                print_error("Something is wrong with the supplied arguments.")
+            except SyntaxError:
+                print_error("The list is not valid.")
+            except PiGlowError as error:
+                print_error(error.message)
+        else:
+            print_error("This command expects a list and a brightness.")
+
+
 
     ## Redefinition of some inherited methods
     def emptyline(self):
@@ -198,7 +219,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_led(self, args):
         """Command to light a LED."""
-        PiGlowCmd.two_args(self.__piglow.led, args)
+        PiGlowCmd.two_args_id(self.__piglow.led, args)
 
     @printhelp
     def help_led(self):
@@ -208,7 +229,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_arm(self, args):
         """Command to light an Arm."""
-        PiGlowCmd.two_args(self.__piglow.arm, args)
+        PiGlowCmd.two_args_id(self.__piglow.arm, args)
 
     @printhelp
     def help_arm(self):
@@ -218,7 +239,7 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_ring(self, args):
         """Command to light a Ring."""
-        PiGlowCmd.two_args(self.__piglow.ring, args)
+        PiGlowCmd.two_args_id(self.__piglow.ring, args)
 
     @printhelp
     def help_ring(self):
@@ -228,29 +249,27 @@ class PiGlowCmd(Cmd):
     @foolproof
     def do_color(self, args):
         """Command to light a Color."""
-        PiGlowCmd.two_args(self.__piglow.color, args)
+        PiGlowCmd.two_args_id(self.__piglow.color, args)
 
     @printhelp
     def help_color(self):
         """Print the help for the color command."""
         return self.__piglow.color
 
-    @notimplemented
-    def do_ledset(self, args):
+    def do_led_set(self, args):
         """Command to light a set of LEDs."""
-        pass
+        PiGlowCmd.two_args_set(self.__piglow.led_set, args)
 
-    @printhelpnotimpl
-    def help_ledset(self):
+    @printhelp
+    def help_led_set(self):
         """Print the help for the ledset command."""
         return self.__piglow.led_set
 
-    @notimplemented
     def do_buffer(self, args):
         """Command to buffer brightnesses."""
-        pass
+        PiGlowCmd.two_args_set(self.__piglow.buffer, args)
 
-    @printhelpnotimpl
+    @printhelp
     def help_buffer(self):
         """Print the help for the buffer command."""
         return self.__piglow.buffer
