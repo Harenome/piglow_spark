@@ -76,11 +76,11 @@ class Bus(object):
 
     def flush(self):
         """Flush the buffer."""
-        for led_address, brightness in self.__buffer:
-            self.set_led(led_address, brightness)
-            self.__state[led_address] = brightness
-        self.update()
-        self.empty_buffer()
+        if self.__buffer:
+            for led_address, brightness in self.__buffer:
+                self.set_led(led_address, brightness)
+            self.update()
+            self.empty_buffer()
 
     def up_to_date(self):
         """Check whether there are LEDs waiting to be updated."""
