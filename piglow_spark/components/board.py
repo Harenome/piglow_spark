@@ -58,6 +58,39 @@ class Board(object):
         set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
         set_.buffer(brightness)
 
+    def gamma_all(self, brightness):
+        """Immediately light all the LEDs."""
+        self.__all.gamma_light(brightness)
+
+    def gamma_led(self, identifier, brightness):
+        """Immediately light a LED."""
+        index = Led.correct_id(identifier) - 1
+        self.__leds[index].gamma_light(brightness)
+
+    def gamma_arm(self, identifier, brightness):
+        """Immediately light an arm."""
+        index = Arm.correct_id(identifier) - 1
+        self.__arms[index].gamma_light(brightness)
+
+    def gamma_ring(self, identifier, brightness):
+        """Immediately light a ring."""
+        index = Ring.correct_id(identifier) - 1
+        self.__rings[index].gamma_light(brightness)
+
+    def gamma_color(self, identifier, brightness):
+        """Immediately light all LEDs of the same color. Akin to ring."""
+        self.gamma_ring(identifier, brightness)
+
+    def gamma_led_set(self, leds, brightness):
+        """Immediately light a set of LEDs."""
+        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_.gamma_light(brightness)
+
+    def gamma_buffer(self, leds, brightness):
+        """Buffer values for a set of LEDs."""
+        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_.gamma_buffer(brightness)
+
     def dump(self):
         """Backup the current state of the Piglow."""
         return self.__bus.dump()

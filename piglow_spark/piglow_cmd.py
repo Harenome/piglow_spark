@@ -274,6 +274,75 @@ class PiGlowCmd(Cmd):
         """Print the help for the buffer command."""
         return self.__piglow.buffer
 
+    @foolproof
+    def do_gamma_all(self, args):
+        """Do all."""
+        brightness = int(args)
+        self.__piglow.gamma_all(brightness)
+
+    @printhelp
+    def help_gamma_all(self):
+        """Print the help for gamma_all."""
+        return self.__piglow.gamma_all
+
+    @foolproof
+    def do_gamma_led(self, args):
+        """Command to light a LED."""
+        PiGlowCmd.two_args_id(self.__piglow.gamma_led, args)
+
+    @printhelp
+    def help_gamma_led(self):
+        """Print the help for the gamma_led command."""
+        return self.__piglow.gamma_led
+
+    @foolproof
+    def do_gamma_arm(self, args):
+        """Command to light an Arm."""
+        PiGlowCmd.two_args_id(self.__piglow.gamma_arm, args)
+
+    @printhelp
+    def help_gamma_arm(self):
+        """Print the help for the gamma_arm command."""
+        return self.__piglow.gamma_arm
+
+    @foolproof
+    def do_gamma_ring(self, args):
+        """Command to light a Ring."""
+        PiGlowCmd.two_args_id(self.__piglow.gamma_ring, args)
+
+    @printhelp
+    def help_gamma_ring(self):
+        """Print the help for the gamma_ring command."""
+        return self.__piglow.gamma_ring
+
+    @foolproof
+    def do_gamma_color(self, args):
+        """Command to light a Color."""
+        PiGlowCmd.two_args_id(self.__piglow.gamma_color, args)
+
+    @printhelp
+    def help_gamma_color(self):
+        """Print the help for the gamma_color command."""
+        return self.__piglow.gamma_color
+
+    def do_gamma_led_set(self, args):
+        """Command to light a set of LEDs."""
+        PiGlowCmd.two_args_set(self.__piglow.gamma_led_set, args)
+
+    @printhelp
+    def help_gamma_led_set(self):
+        """Print the help for the gamma_led_set command."""
+        return self.__piglow.gamma_led_set
+
+    def do_gamma_buffer(self, args):
+        """Command to buffer brightnesses."""
+        PiGlowCmd.two_args_set(self.__piglow.gamma_buffer, args)
+
+    @printhelp
+    def help_gamma_buffer(self):
+        """Print the help for the gamma_buffer command."""
+        return self.__piglow.gamma_buffer
+
     @noargs
     def do_dump(self, args):
         """Command to dump the current state."""
