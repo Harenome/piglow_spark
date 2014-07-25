@@ -23,3 +23,7 @@ class PiGlow(Board):
     RING_FIRST = Ring.FIRST
     RING_AVAILABLE = Ring.available()
 
+    GAMMA_32 = Led.GAMMA_TABLE_32[:]
+    GAMMA_64 = Led.GAMMA_TABLE_64[:]
+    GAMMA_128 = Led.GAMMA_TABLE_128[:]
+    GAMMA_256 = Led.GAMMA_TABLE_256[:]
