@@ -23,10 +23,11 @@ class Board(object):
         for identifier in range(Ring.FIRST, Ring.NUMBER+1):
             self.__rings.append(Ring(identifier, self.__leds))
 
+        self.__all = LedSet(self.__leds)
+
     def all(self, brightness):
         """Immediately light all the LEDs."""
-        for led in self.__leds:
-            led.light(brightness)
+        self.__all.light(brightness)
 
     def led(self, identifier, brightness):
         """Immediately light a LED."""
@@ -49,15 +50,13 @@ class Board(object):
 
     def led_set(self, leds, brightness):
         """Immediately light a set of LEDs."""
-        for led in leds:
-            index = Led.correct_id(led) - 1
-            self.__leds[index].light(brightness)
+        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_.light(brightness)
 
     def buffer(self, leds, brightness):
         """Buffer values for a set of LEDs."""
-        for led in leds:
-            index = Led.correct_id(led) - 1
-            self.__leds[index].buffer(brightness)
+        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_.buffer(brightness)
 
     def dump(self):
         """Backup the current state of the Piglow."""
@@ -67,14 +66,13 @@ class Board(object):
         """Restore previously dumped state."""
         self.__bus.restore(backup)
 
-    def update(self):
-        """Update the Piglow according to the values previously buffered."""
-        self.__bus.update()
+    def flush(self):
+        """Flush the PiGlow's buffer."""
+        self.__bus.flush()
 
     def off(self):
         """Turn off all the LEDs."""
-        for led in self.__leds:
-            led.off()
+        self.__all.off()
 
     def up_to_date(self):
         """Check whether values have been buffered and are not effective yet."""

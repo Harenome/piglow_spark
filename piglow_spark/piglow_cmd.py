@@ -296,13 +296,13 @@ class PiGlowCmd(Cmd):
 
     @noargs
     def do_update(self, args):
-        """Command to update the board."""
-        self.__piglow.update()
+        """Command to flush the board."""
+        self.__piglow.flush()
 
     @printhelp
     def help_update(self):
-        """Print the help for the update command."""
-        return self.__piglow.update
+        """Print the help for the flush command."""
+        return self.__piglow.flush
 
     @noargs
     def do_off(self, args):
