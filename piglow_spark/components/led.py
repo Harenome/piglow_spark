@@ -153,26 +153,30 @@ class Led(object):
     def buffer(self, brightness):
         """Buffer a brightness value."""
         if Led.check_brightness(brightness):
-            self.__bus.buffer(self.__address, brightness)
+            self.unsafe_buffer(brightness)
 
     def light(self, brightness):
         """Immediately light the LED."""
         if Led.check_brightness(brightness):
-            self.__bus.light_led(self.__address, brightness)
+            self.unsafe_light(brightness)
 
     def gamma_buffer(self, brightness):
         """Buffer a gamma corrected brightness value."""
         correct_brightness = Led.gamma_correct(brightness)
-        self.__bus.buffer(self.__address, correct_brightness)
+        self.unsafe_buffer(correct_brightness)
 
     def gamma_light(self, brightness):
         """Immediately light the LED."""
         correct_brightness = Led.gamma_correct(brightness)
-        self.__bus.light_led(self.__address, correct_brightness)
+        self.unsafe_light(correct_brightness)
 
     def unsafe_set(self, brightness):
         """(Unsafe) Set the LED's brightness."""
         self.__bus.set_led(self.__address, brightness)
+
+    def unsafe_light(self, brightness):
+        """(Unsafe) Immediately light the LED."""
+        self.__bus.light_led(self.__address, brightness)
 
     def unsafe_buffer(self, brightness):
         """(Unsafe) Buffer the brightness."""
