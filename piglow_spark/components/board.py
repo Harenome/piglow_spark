@@ -50,12 +50,12 @@ class Board(object):
 
     def led_set(self, leds, brightness):
         """Immediately light a set of LEDs."""
-        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_ = LedSet([self.__leds[Led.correct_id(led) - 1] for led in leds])
         set_.light(brightness)
 
     def buffer(self, leds, brightness):
         """Buffer values for a set of LEDs."""
-        set_ = LedSet([self.__leds[Led.correct_id(led)] for led in leds])
+        set_ = LedSet([self.__leds[Led.correct_id(led) - 1] for led in leds])
         set_.buffer(brightness)
 
     def gamma_all(self, brightness):
